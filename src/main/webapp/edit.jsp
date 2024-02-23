@@ -11,7 +11,7 @@
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
-    <title>Create new student</title>
+    <title>Edit student</title>
     <style>
         h1{
             text-align: center;
@@ -20,38 +20,38 @@
 </head>
 <body>
 <div class="container" >
-    <h1> Create New Student</h1>
+    <h1> Edit Student Information</h1>
     <form method="post">
         <div class="mb-3">
             <label for="exampleInputName" class="form-label">Name</label>
-            <input type="text" class="form-control" id="exampleInputName" name="name" placeholder="enter name">
+            <input type="text" class="form-control" id="exampleInputName" name="name" value="<c:out value="${students.getName()}"></c:out>">
         </div>
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Email address</label>
-            <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="enter email">
+            <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="<c:out value="${students.getEmail()}"></c:out>">
         </div>
         <div class="mb-3">
             <label for="exampleInputDOB" class="form-label">Date of birth</label>
-            <input name="dateOfBirth" type="text" class="form-control" id="exampleInputDOB" placeholder="enter date of birth YYYY-MM-DD">
+            <input name="dateOfBirth" type="text" class="form-control" id="exampleInputDOB" value="<c:out value="${students.getDateOfBirth()}"></c:out>">
         </div>
         <div class="mb-3">
             <label for="exampleInputAdd" class="form-label">Address</label>
-            <input name="address" type="text" class="form-control" id="exampleInputAdd" placeholder="enter address">
+            <input name="address" type="text" class="form-control" id="exampleInputAdd" value="<c:out value="${students.getAddress()}"></c:out>">
         </div>
         <div class="mb-3">
             <label for="exampleInputPhone" class="form-label">Phone number</label>
-            <input name="phone" type="text" class="form-control" id="exampleInputPhone" placeholder="enter phone number">
+            <input name="phone" type="text" class="form-control" id="exampleInputPhone" value="<c:out value="${students.getPhone()}"></c:out>">
         </div>
         <div class="mb-3">
             <label class="form-label">Class </label>
-            <select name="classroom" id="classroom">
+            <select name="classroom" id="classroom" >
                 <c:forEach items="${classroom}" var="cl">
-                    <option value="${cl.id}">${cl.name}</option>
+                    <option value="${cl.id}" selected>${cl.name}</option>
                 </c:forEach>
             </select>
         </div>
 
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Edit</button>
     </form>
 
 </div>

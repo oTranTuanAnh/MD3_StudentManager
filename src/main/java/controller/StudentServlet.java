@@ -38,13 +38,28 @@ public class StudentServlet extends HttpServlet {
                 showList(req, resp);
                 break;
             case "edit":
-//                showFormEdit(req, resp);
+                showFormEdit(req, resp);
                 break;
             default:
                 showList(req, resp);
                 break;
         }
     }
+
+    private void showFormEdit(HttpServletRequest req, HttpServletResponse resp) {
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/edit.jsp");
+        req.setAttribute("students", studentService.findById(Integer.parseInt(req.getParameter("id"))));
+        req.setAttribute("classroom", classService.findAll());
+        try {
+            dispatcher.forward(req, resp);
+        } catch (ServletException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
     private void showSearch(HttpServletRequest req, HttpServletResponse resp) {
         String s_name = "%"+req.getParameter("search")+"%";
         req.setAttribute("studentResult", studentService.findByName(s_name));
@@ -57,10 +72,7 @@ public class StudentServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
     }
-//    private void showfindByName(HttpServletRequest req, HttpServletResponse resp) {
-//        String s_name = req.getParameter("nameToFind");
-//        studentService.findByName(s_name);
-//    }
+
 
     private void showFormCreate(HttpServletRequest req, HttpServletResponse resp) {
         RequestDispatcher dispatcher = req.getRequestDispatcher("/create.jsp");
@@ -101,11 +113,26 @@ public class StudentServlet extends HttpServlet {
                 break;
 
             case "edit":
-//                showFormEdit(req, resp);
+                editStudent(req, resp);
+                showList(req, resp);
                 break;
             default:
                 showList(req, resp);
         }
+    }
+
+    private void editStudent(HttpServletRequest req, HttpServletResponse resp) {
+        int s_id = Integer.parseInt(req.getParameter("id"));
+        String s_name = req.getParameter("name");
+        String s_email = req.getParameter("email");
+        DateTimeFormatter fmt2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate s_date = LocalDate.parse(req.getParameter("dateOfBirth"), fmt2);
+        String s_add = req.getParameter("address");
+        String s_phone = req.getParameter("phone");
+        int s_c_id = Integer.parseInt(req.getParameter("classroom"));
+
+        Student student = new Student(s_name, s_email, s_date,s_add, s_phone, s_c_id );
+        studentService.edit(student, s_id);
     }
 
     private void deleteByID(HttpServletRequest req, HttpServletResponse resp) {

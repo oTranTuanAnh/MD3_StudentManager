@@ -17,9 +17,11 @@ import java.util.regex.Pattern;
 
 public class StudentService implements IStudentService{
     public static final String SELECT_ALL_FROM_STUDENT = "select * from student;";
+    public static final String SELECT_FROM_STUDENT_WHERE_ID = "select * from student where id=?;";
     public static final String INSERT_INTO_STUDENT = "insert into student (name, email, date_of_birth, address, phone, class_id) values (?,?,?,?,?,?);";
     public static final String SELECT_FROM_STUDENT_WHERE_NAME_LIKE = "select * from student where name like ?;";
     public static final String DELETE_FROM_STUDENT_WHERE_ID = "delete from student where id = ?;";
+    public static final String UPDATE_STUDENT_WHERE_ID = "update student set name = ?, email =?, date_of_birth=?,address = ?, phone= ?,class_id = ? where id =?;";
     Connection connection = ConnectionJDBC.getConnection();
     IClassService classService = new ClassService();
     @Override
@@ -50,7 +52,27 @@ public class StudentService implements IStudentService{
 
     @Override
     public Student findById(int id) {
-        return null;
+        try {
+
+            PreparedStatement statement = connection.prepareStatement(SELECT_FROM_STUDENT_WHERE_ID);
+            statement.setString(1, String.valueOf(id));
+            ResultSet resultSet = statement.executeQuery();
+           Student student = null;
+            while (resultSet.next()){
+                int s_id = resultSet.getInt("id");
+                String s_name = resultSet.getString("name");
+                String s_email = resultSet.getString("email");
+                LocalDate s_dob = resultSet.getDate("date_of_birth").toLocalDate();
+                String s_add = resultSet.getString("address");
+                String s_phone = resultSet.getString("phone");
+                int s_c_id = resultSet.getInt("class_id");
+                String s_c_name = classService.findById(s_c_id).getName();
+                student = new Student(s_id, s_name, s_email, s_dob, s_add, s_phone, s_c_id, s_c_name);
+            }
+            return student;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -107,6 +129,24 @@ public class StudentService implements IStudentService{
                     studentList.add(student);
             }
             return studentList;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void edit(Student s, int id) {
+        try {
+            PreparedStatement statement = connection.prepareStatement(UPDATE_STUDENT_WHERE_ID);
+            statement.setString(1, s.getName());
+            statement.setString(2, s.getEmail());
+            statement.setString(3, String.valueOf(s.getDateOfBirth()));
+            statement.setString(4, s.getAddress());
+            statement.setString(5, s.getPhone());
+            statement.setString(6, String.valueOf(s.getClassID()));
+            statement.setString(7, String.valueOf(id));
+            statement.executeUpdate();
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
