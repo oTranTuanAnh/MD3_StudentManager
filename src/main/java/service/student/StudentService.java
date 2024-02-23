@@ -17,6 +17,7 @@ import java.util.regex.Pattern;
 
 public class StudentService implements IStudentService{
     public static final String SELECT_ALL_FROM_STUDENT = "select * from student;";
+    public static final String INSERT_INTO_STUDENT = "insert into student (name, email, date_of_birth, address, phone, class_id) values (?,?,?,?,?,?);";
     Connection connection = ConnectionJDBC.getConnection();
     IClassService classService = new ClassService();
     @Override
@@ -52,7 +53,19 @@ public class StudentService implements IStudentService{
 
     @Override
     public void save(Student student) {
-
+        try {
+            PreparedStatement statement = connection.prepareStatement(INSERT_INTO_STUDENT);
+//            name, email, date_of_birth, address, phone, class_id
+            statement.setString(1,student.getName());
+            statement.setString(2,student.getEmail());
+            statement.setString(3, String.valueOf(student.getDateOfBirth()));
+            statement.setString(4,student.getAddress());
+            statement.setString(5,student.getPhone());
+            statement.setString(6, String.valueOf(student.getClassID()));
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
