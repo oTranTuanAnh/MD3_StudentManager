@@ -10,6 +10,26 @@ public class Student {
     private String address;
     private String phone;
     private int classID;
+    private String className;
+
+    public String getClassName() {
+        return className;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
+    }
+
+    public Student(int id, String name, String email, LocalDate dateOfBirth, String address, String phone, int classID, String className) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.dateOfBirth = dateOfBirth;
+        this.address = address;
+        this.phone = phone;
+        this.classID = classID;
+        this.className = className;
+    }
 
     public Student() {
     }
@@ -30,6 +50,14 @@ public class Student {
         this.dateOfBirth = dateOfBirth;
         this.address = address;
         this.phone = phone;
+        this.classID = classID;
+    }
+
+    public int getClassID() {
+        return classID;
+    }
+
+    public void setClassID(int classID) {
         this.classID = classID;
     }
 
@@ -81,11 +109,5 @@ public class Student {
         this.phone = phone;
     }
 
-    public int getClassID() {
-        return classID;
-    }
 
-    public void setClassID(int classID) {
-        this.classID = classID;
-    }
 }
