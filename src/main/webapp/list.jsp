@@ -25,6 +25,22 @@
     </style>
 </head>
 <body>
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <div class="d-grid gap-2 col-2 mx-auto">
+            <button class="btn btn-primary" type="button">
+                <a href="/student?action=create" class="btn text-light ms-auto">Create new student</a>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <form class="d-flex ms-auto" role="search" >
+                    <input type="hidden" name="action" value="search"/>
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
+                    <button class="btn btn-outline-dark" type="submit">Search</button>
+                </form>
+        </div>
+    </div>
+</nav>
 <h1>Students List</h1>
 <table class="table">
     <thead>
@@ -59,18 +75,7 @@
 
     </tbody>
 </table>
-<div class="d-grid gap-2 col-2 mx-auto">
-    <button class="btn btn-primary" type="button">
-        <a href="/student?action=create" class="btn text-light ms-auto">Create new student</a>
-    </button>
-</div>
-<div class="search-main">
-    <form class="d-flex" role="search">
-        <input type="hidden" value="search"/>
-        <input type="hidden" name="action" value="search"/>
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
-        <button class="btn btn-outline-dark" type="submit">Search</button>
-    </form>
-</div>
+
+
 </body>
 </html>
