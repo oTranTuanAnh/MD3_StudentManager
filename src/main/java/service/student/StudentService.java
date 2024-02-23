@@ -19,6 +19,7 @@ public class StudentService implements IStudentService{
     public static final String SELECT_ALL_FROM_STUDENT = "select * from student;";
     public static final String INSERT_INTO_STUDENT = "insert into student (name, email, date_of_birth, address, phone, class_id) values (?,?,?,?,?,?);";
     public static final String SELECT_FROM_STUDENT_WHERE_NAME_LIKE = "select * from student where name like ?;";
+    public static final String DELETE_FROM_STUDENT_WHERE_ID = "delete from student where id = ?;";
     Connection connection = ConnectionJDBC.getConnection();
     IClassService classService = new ClassService();
     @Override
@@ -71,7 +72,13 @@ public class StudentService implements IStudentService{
 
     @Override
     public void delete(int id) {
-
+        try {
+            PreparedStatement statement = connection.prepareStatement(DELETE_FROM_STUDENT_WHERE_ID);
+            statement.setString(1, String.valueOf(id));
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

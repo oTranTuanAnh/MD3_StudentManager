@@ -33,6 +33,10 @@ public class StudentServlet extends HttpServlet {
             case "search":
                 showSearch(req, resp);
                 break;
+            case "delete":
+                deleteByID(req, resp);
+                showList(req, resp);
+                break;
             case "edit":
 //                showFormEdit(req, resp);
                 break;
@@ -95,10 +99,7 @@ public class StudentServlet extends HttpServlet {
                 createNewStudent(req, resp);
                 showList(req, resp);
                 break;
-//            case "search":
-//                findByName(req, resp);
-////                showResulSearch(req, resp);
-//                break;
+
             case "edit":
 //                showFormEdit(req, resp);
                 break;
@@ -107,12 +108,10 @@ public class StudentServlet extends HttpServlet {
         }
     }
 
-    private void findByName(HttpServletRequest req, HttpServletResponse resp) {
-        String s_name = req.getParameter("nameToFind");
-        studentService.findByName(s_name);
+    private void deleteByID(HttpServletRequest req, HttpServletResponse resp) {
+        int s_id = Integer.parseInt(req.getParameter("id"));
+        studentService.delete(s_id);
     }
-
-
 
 
     private void createNewStudent(HttpServletRequest req, HttpServletResponse resp) {

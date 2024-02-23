@@ -49,8 +49,9 @@
             <td>${st.getAddress()}</td>
             <td>${st.getPhone()}</td>
             <td>${st.getClassName()}</td>
-            <td>Edit</td>
-            <td>Delete</td>
+            <td>
+                <a href="${pageContext.request.contextPath}/student?action=edit&id=${st.getId()}">Edit</a></td>
+            <td><a href="${pageContext.request.contextPath}/student?action=delete&id=${st.getId()}">Delete</a></td>
 
         </tr>
     </c:forEach>
