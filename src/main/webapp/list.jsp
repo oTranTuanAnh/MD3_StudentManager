@@ -66,8 +66,9 @@
             <td>${st.getPhone()}</td>
             <td>${st.getClassName()}</td>
             <td>
-                <a href="${pageContext.request.contextPath}/student?action=edit&id=${st.getId()}">Edit</a></td>
-            <td><a href="${pageContext.request.contextPath}/student?action=delete&id=${st.getId()}">Delete</a></td>
+                <a class="btn btn-primary" role="button" href="${pageContext.request.contextPath}/student?action=edit&id=${st.getId()}">Edit</a>
+                <a class="btn btn-danger" role="button" href="${pageContext.request.contextPath}/student?action=delete&id=${st.getId()}">Delete</a>
+            </td>
 
         </tr>
     </c:forEach>
