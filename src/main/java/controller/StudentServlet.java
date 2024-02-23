@@ -30,6 +30,9 @@ public class StudentServlet extends HttpServlet {
             case "create":
                 showFormCreate(req, resp);
                 break;
+            case "search":
+                showSearch(req, resp);
+                break;
             case "edit":
 //                showFormEdit(req, resp);
                 break;
@@ -38,6 +41,22 @@ public class StudentServlet extends HttpServlet {
                 break;
         }
     }
+    private void showSearch(HttpServletRequest req, HttpServletResponse resp) {
+        String s_name = "%"+req.getParameter("search")+"%";
+        req.setAttribute("studentResult", studentService.findByName(s_name));
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/search.jsp");
+        try {
+            dispatcher.forward(req, resp);
+        } catch (ServletException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+//    private void showfindByName(HttpServletRequest req, HttpServletResponse resp) {
+//        String s_name = req.getParameter("nameToFind");
+//        studentService.findByName(s_name);
+//    }
 
     private void showFormCreate(HttpServletRequest req, HttpServletResponse resp) {
         RequestDispatcher dispatcher = req.getRequestDispatcher("/create.jsp");
@@ -74,7 +93,12 @@ public class StudentServlet extends HttpServlet {
         switch (act){
             case "create":
                 createNewStudent(req, resp);
+                showList(req, resp);
                 break;
+//            case "search":
+//                findByName(req, resp);
+////                showResulSearch(req, resp);
+//                break;
             case "edit":
 //                showFormEdit(req, resp);
                 break;
@@ -82,6 +106,14 @@ public class StudentServlet extends HttpServlet {
                 showList(req, resp);
         }
     }
+
+    private void findByName(HttpServletRequest req, HttpServletResponse resp) {
+        String s_name = req.getParameter("nameToFind");
+        studentService.findByName(s_name);
+    }
+
+
+
 
     private void createNewStudent(HttpServletRequest req, HttpServletResponse resp) {
         String s_name = req.getParameter("name");

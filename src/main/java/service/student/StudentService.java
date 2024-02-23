@@ -18,6 +18,7 @@ import java.util.regex.Pattern;
 public class StudentService implements IStudentService{
     public static final String SELECT_ALL_FROM_STUDENT = "select * from student;";
     public static final String INSERT_INTO_STUDENT = "insert into student (name, email, date_of_birth, address, phone, class_id) values (?,?,?,?,?,?);";
+    public static final String SELECT_FROM_STUDENT_WHERE_NAME_LIKE = "select * from student where name like ?;";
     Connection connection = ConnectionJDBC.getConnection();
     IClassService classService = new ClassService();
     @Override
@@ -76,5 +77,31 @@ public class StudentService implements IStudentService{
     @Override
     public void edit(int id) {
 
+    }
+
+    @Override
+    public List<Student> findByName(String name) {
+        try {
+
+            PreparedStatement statement = connection.prepareStatement(SELECT_FROM_STUDENT_WHERE_NAME_LIKE);
+            statement.setString(1,name);
+            ResultSet resultSet = statement.executeQuery();
+            List<Student> studentList = new ArrayList<>();
+            while (resultSet.next()){
+                    int s_id = resultSet.getInt("id");
+                    String s_name = resultSet.getString("name");
+                    String s_email = resultSet.getString("email");
+                    LocalDate s_dob = resultSet.getDate("date_of_birth").toLocalDate();
+                    String s_add = resultSet.getString("address");
+                    String s_phone = resultSet.getString("phone");
+                    int s_c_id = resultSet.getInt("class_id");
+                    String s_c_name = classService.findById(s_c_id).getName();
+                    Student student = new Student(s_id, s_name, s_email, s_dob, s_add, s_phone, s_c_id, s_c_name);
+                    studentList.add(student);
+            }
+            return studentList;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

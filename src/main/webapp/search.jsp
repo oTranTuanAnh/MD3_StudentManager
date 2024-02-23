@@ -25,7 +25,7 @@
     </style>
 </head>
 <body>
-<h1>Students List</h1>
+<h1>Students Search Result</h1>
 <table class="table">
     <thead>
     <tr>
@@ -36,11 +36,11 @@
         <th scope="col">Address</th>
         <th scope="col">Phone</th>
         <th scope="col">ClassRoom</th>
-        <th scope="col">Action</th>
+
     </tr>
     </thead>
     <tbody>
-    <c:forEach items="${students}" var="st">
+    <c:forEach items="${studentResult}" var="st">
         <tr>
             <th scope="row">${st.id}</th>
             <td>${st.getName()}</td>
@@ -49,8 +49,6 @@
             <td>${st.getAddress()}</td>
             <td>${st.getPhone()}</td>
             <td>${st.getClassName()}</td>
-            <td>Edit</td>
-            <td>Delete</td>
 
         </tr>
     </c:forEach>
@@ -60,16 +58,9 @@
 </table>
 <div class="d-grid gap-2 col-2 mx-auto">
     <button class="btn btn-primary" type="button">
-        <a href="/student?action=create" class="btn text-light ms-auto">Create new student</a>
+        <a href="/student" class="btn text-light ms-auto">Back to student list</a>
     </button>
 </div>
-<div class="search-main">
-    <form class="d-flex" role="search">
-        <input type="hidden" value="search"/>
-        <input type="hidden" name="action" value="search"/>
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
-        <button class="btn btn-outline-dark" type="submit">Search</button>
-    </form>
-</div>
+
 </body>
 </html>
